@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление пользователя</title>
+</head>
+<body>
+<h1>Add User</h1>
+
+<form action="/addUser" method="post" id="userForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" name="surname" required><br>
+
+    <label for="post">Post:</label>
+    <input type="text" id="post" name="post" required><br>
+
+    <label for="login">Login:</label>
+    <input type="text" id="login" name="login" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+</form>
+
+<button type="submit" form="userForm">Добавить пользователя</button>
+</body>
+</html>

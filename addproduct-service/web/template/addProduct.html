@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление товара</title>
+</head>
+<body>
+<p>Вторая страница</p>
+<form action="/addProduct" method="post" id="productForm">
+    <label for="productName">Название товара</label>
+    <input type="text" id="productName" name="productName" required><br>
+
+    <label for="productType">Тип продукта</label>
+    <input type="text" id="productType" name="productType" required><br>
+
+    <label for="productPrice">Цена товара:</label>
+    <input type="number" id="productPrice" name="productPrice" required><br>
+
+    <label for="productCount">Количество товара:</label>
+    <input type="number" id="productCount" name="productCount" required><br>
+</form>
+
+<button type="submit" form="productForm">Добавить товар</button>
+
+</body>
+</html>
