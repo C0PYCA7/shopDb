@@ -1,7 +1,9 @@
 package models
 
 type AddUser struct {
-	OldLogin string
+	Name     string
+	Surname  string
+	Post     string
 	Login    string
 	Password string
 }

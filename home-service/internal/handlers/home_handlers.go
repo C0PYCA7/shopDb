@@ -14,9 +14,8 @@ func HomeGetHandler(c echo.Context) error {
 
 func HomePostHandler(c echo.Context) error {
 
-	post, _, err := readCookie(c)
+	post, _, isAdmin, err := readCookie(c)
 	if err != nil {
-		// Обработка ошибки при чтении куки
 		return c.String(http.StatusUnauthorized, "Ошибка авторизации")
 	}
 
@@ -26,7 +25,7 @@ func HomePostHandler(c echo.Context) error {
 
 	switch action {
 	case "listOfProduct":
-		return c.Redirect(http.StatusSeeOther, "http://localhost:8081/listOfProduct")
+		return c.Redirect(http.StatusSeeOther, "http://localhost:8085/list")
 
 	case "addProduct":
 		if post == "Manager" {
@@ -37,7 +36,14 @@ func HomePostHandler(c echo.Context) error {
 
 	case "sale":
 		if post == "Seller" {
-			return c.Redirect(http.StatusSeeOther, "http://localhost:8081/sale")
+			return c.Redirect(http.StatusSeeOther, "http://localhost:8084/sale")
+		} else {
+			return c.String(http.StatusForbidden, "У вас недостаточно прав для выполнения этого действия")
+		}
+
+	case "addUser":
+		if isAdmin == "1" {
+			return c.Redirect(http.StatusSeeOther, "http://localhost:8083/addUser")
 		} else {
 			return c.String(http.StatusForbidden, "У вас недостаточно прав для выполнения этого действия")
 		}
@@ -46,15 +52,15 @@ func HomePostHandler(c echo.Context) error {
 	return nil
 }
 
-func readCookie(c echo.Context) (string, string, error) {
+func readCookie(c echo.Context) (string, string, string, error) {
 	cookie, err := c.Cookie("user")
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 
 	values := strings.Split(cookie.Value, "|")
-	if len(values) != 2 {
-		return "", "", errors.New("неверный формат куки")
+	if len(values) != 3 {
+		return "", "", "", errors.New("неверный формат куки")
 	}
-	return values[0], values[1], nil
+	return values[0], values[1], values[2], nil
 }

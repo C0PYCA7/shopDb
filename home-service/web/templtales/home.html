@@ -2,8 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/css/home.css">
     <title>Home page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        div {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px; /* Добавил небольшой отступ между кнопками */
+            width: 200px; /* Установил фиксированную ширину для всех кнопок */
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -15,6 +50,9 @@
     </form>
     <form action="/home" method="post">
         <button type="submit" name="action" value="sale">Продажа</button>
+    </form>
+    <form action="/home" method="post">
+        <button type="submit" name="action" value="addUser">Добавить пользователя</button>
     </form>
 </div>
 </body>

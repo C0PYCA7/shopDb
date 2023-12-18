@@ -8,5 +8,5 @@ import (
 func main() {
 	database.ConnectDb()
 	defer database.CloseDb()
-	server.StartServer("8082")
+	server.StartServer("8084")
 }
