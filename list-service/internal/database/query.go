@@ -25,3 +25,24 @@ func GetAllProducts() []models.Product {
 	log.Print(product)
 	return product
 }
+
+func SearchProductByName(searchItem string) ([]models.Product, error) {
+	var searchResults []models.Product
+
+	query := "SELECT p.name, t.name as type, p.price, p.count FROM product p INNER JOIN type t ON p.id_type = t.id WHERE LOWER(p.name) LIKE LOWER($1)"
+	rows, err := db.Query(query, "%"+searchItem+"%")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p models.Product
+		err := rows.Scan(&p.Name, &p.Type, &p.Price, &p.Count)
+		if err != nil {
+			return nil, err
+		}
+		searchResults = append(searchResults, p)
+	}
+	return searchResults, nil
+}

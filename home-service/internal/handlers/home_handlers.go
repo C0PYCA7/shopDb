@@ -28,14 +28,14 @@ func HomePostHandler(c echo.Context) error {
 		return c.Redirect(http.StatusSeeOther, "http://localhost:8085/list")
 
 	case "addProduct":
-		if post == "Manager" {
+		if post == "Manager" || isAdmin == "1" {
 			return c.Redirect(http.StatusSeeOther, "http://localhost:8082/addProduct")
 		} else {
 			return c.String(http.StatusForbidden, "У вас недостаточно прав для выполнения этого действия")
 		}
 
 	case "sale":
-		if post == "Seller" {
+		if post == "Seller" || isAdmin == "1" {
 			return c.Redirect(http.StatusSeeOther, "http://localhost:8084/sale")
 		} else {
 			return c.String(http.StatusForbidden, "У вас недостаточно прав для выполнения этого действия")
@@ -44,6 +44,13 @@ func HomePostHandler(c echo.Context) error {
 	case "addUser":
 		if isAdmin == "1" {
 			return c.Redirect(http.StatusSeeOther, "http://localhost:8083/addUser")
+		} else {
+			return c.String(http.StatusForbidden, "У вас недостаточно прав для выполнения этого действия")
+		}
+
+	case "story":
+		if isAdmin == "1" {
+			return c.Redirect(http.StatusSeeOther, "http://localhost:8086/story")
 		} else {
 			return c.String(http.StatusForbidden, "У вас недостаточно прав для выполнения этого действия")
 		}

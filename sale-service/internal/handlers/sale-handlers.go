@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"github.com/labstack/echo/v4"
 	"log"
 	"net/http"
@@ -16,6 +17,11 @@ func SaleGetHandler(c echo.Context) error {
 
 func SalePostHandler(c echo.Context) error {
 
+	_, name, _, err := readCookie(c)
+	if err != nil {
+		return c.String(http.StatusUnauthorized, "Ошибка авторизации")
+	}
+
 	quantityStr := c.FormValue("quantity")
 
 	quantity, err := strconv.Atoi(quantityStr)
@@ -24,7 +30,7 @@ func SalePostHandler(c echo.Context) error {
 	}
 
 	user := models.User{
-		SellerName:   toUpperCase(c.FormValue("sellerName")),
+		SellerName:   toUpperCase(name),
 		BuyerName:    toUpperCase(c.FormValue("buyerName")),
 		BuyerSurname: toUpperCase(c.FormValue("buyerSurname")),
 	}
@@ -61,4 +67,17 @@ func SalePostHandler(c echo.Context) error {
 
 func toUpperCase(s string) string {
 	return strings.ToUpper(s[:1]) + s[1:]
+}
+
+func readCookie(c echo.Context) (string, string, string, error) {
+	cookie, err := c.Cookie("user")
+	if err != nil {
+		return "", "", "", err
+	}
+
+	values := strings.Split(cookie.Value, "|")
+	if len(values) != 3 {
+		return "", "", "", errors.New("неверный формат куки")
+	}
+	return values[0], values[1], values[2], nil
 }

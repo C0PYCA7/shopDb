@@ -56,7 +56,12 @@ func AuthorizationPostHandler(c echo.Context) error {
 			}
 
 			log.Print(isAdmin)
-			writeCookie(user.Login, post, isAdmin, c)
+
+			uName := database.GetUserName(user.Login)
+
+			log.Print(uName)
+
+			writeCookie(uName, post, isAdmin, c)
 			if err != nil {
 				return c.String(http.StatusInternalServerError, "Ошибка сервера")
 			}

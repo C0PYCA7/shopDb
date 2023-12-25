@@ -7,4 +7,5 @@ import (
 
 func SetupRoutesForList(e *echo.Echo) {
 	e.GET("/list", handlers.ListGetHandler)
+	e.POST("/list", handlers.SearchHandler)
 }

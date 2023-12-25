@@ -45,3 +45,13 @@ func GetUserPass(login string) string {
 	}
 	return pass
 }
+
+func GetUserName(login string) string {
+	var name string
+	query := "SELECT employee.name FROM employee JOIN logpass ON employee.id = logpass.id_employee WHERE logpass.login = ($1);"
+	err := db.QueryRow(query, login).Scan(&name)
+	if err != nil {
+		log.Print(err)
+	}
+	return name
+}
